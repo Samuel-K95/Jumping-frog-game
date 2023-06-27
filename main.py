@@ -1,11 +1,15 @@
 import pygame
 import math
 import random
+from pygame import mixer
 
 
 pygame.init()
 
 screen = pygame.display.set_mode((1458, 943))
+
+mixer.music.load('spring-weather-1.wav')
+mixer.music.play(-1)
 
 score=0
 
@@ -93,7 +97,7 @@ while running:
     flag=False
     screen.fill((0,0,0))
 
-
+ 
     screen.blit(back, (0,0))
 
 
@@ -110,7 +114,6 @@ while running:
             pos=i
 
 
-    
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
             running= False
@@ -118,7 +121,11 @@ while running:
             if event.key== pygame.K_SPACE:
                 frogY_change=-frogY_change
                 second= -second
+                jumping_sound= mixer.Sound('jump.wav')
+                jumping_sound.play()
             if case:
+                ribbet=mixer.Sound('frog-ribbet1.wav')
+                ribbet.play()
                 if event.key == pygame.K_j:
                     flag=True
         if event.type == pygame.KEYUP:
@@ -148,6 +155,8 @@ while running:
                 frog_life+=1
                 flyX[i]=10000
                 flyY[i]=10000
+                sparkle=mixer.Sound('Sparkle-sound-effect.wav')
+                sparkle.play()
         
 
     frogX += frogX_change
@@ -156,6 +165,8 @@ while running:
         frog_life-=1
         frogX=initialX
         frogY=initialY
+        splash=mixer.Sound('splash.wav')
+        splash.play()
     if frogX>1450:
         frogX=12
      
